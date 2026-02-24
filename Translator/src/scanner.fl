@@ -936,7 +936,7 @@ static int check_type(void);
 				 }
 			  }
 
- /***  Token: enter  ***/
+ /***  Token: exit  ***/
 "exit"       {
                  if(inPragmaLine)
                  {
@@ -1501,9 +1501,9 @@ static int check_type(void);
 
 "/*"([^*]|\*+[^*/])*\*+"/"	    {
 			                        int cv = 0;
-			                        while("%s", yytext[cv] != '\0')
+			                        while(yytext[cv] != '\0')
 			                        {
-			                            if("%s", yytext[cv] == '\n')
+			                            if(yytext[cv] == '\n')
 			                                line++;
 			                            cv++;
 			                        }

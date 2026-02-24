@@ -2012,7 +2012,7 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
         /** Take care of parallel functions **/
 			
         // Counter how many tasks there are in a function -- to allocate the tred_consumer_array[TASKS][TASKS]
-        tempFunction = tempGraph->parallel_functions;;
+        tempFunction = tempGraph->parallel_functions;
         while(tempFunction)
         {
             functionCounter++;
