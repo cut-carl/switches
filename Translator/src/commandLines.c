@@ -278,6 +278,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
             j = 0;
             totalInputFiles = countInputFiles;
             inputFiles = malloc(sizeof(char*) * countInputFiles);
+
             
             while(argv[i] && strcmp(argv[i], "-s")
                           && strcmp(argv[i], "-t")
@@ -393,6 +394,12 @@ void recognizeCommandlineArguments(int argc, char **argv){
             
             // Allocate memory for NSGA input data structure
             nsga = (NSGA*)malloc(sizeof(NSGA));
+
+            if (!nsga)
+            {
+                ERROR_COMMANDS("%s", "Memory allocation for NSGA failed!")
+                exit(-1);
+            }
                 
             if(!strcmp(argv[i], "-f"))
             {
