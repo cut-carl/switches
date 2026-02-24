@@ -372,7 +372,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 									else
 									{
 										tempConsumers2 = tempFunction->consumers;
-										while(tempConsumers && tempConsumers2->next)
+										while(tempConsumers2 && tempConsumers2->next)
 											tempConsumers2 = tempConsumers2->next;
 										
 										tempConsumers2->next = (producer*)malloc(sizeof(producer));
@@ -815,8 +815,8 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 					 }
 					 tempDataList = tempDataList->next;
 				 }
-				 
-				
+
+
 				/* Check Depend [ INOUT ] list */
 				 
 				 
@@ -1003,8 +1003,8 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 								 tempDataList2 = tempDataList2->next;
 							 }
 						}
-						
-						
+
+
 						if(tempTask2->id > tempTask->id)							// Check all my proceeding tasks
 						 {
 							 // Check if it is already in the list -- Dont put it in twice
@@ -1020,91 +1020,10 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 								 tempTask2 = tempTask2->next;
 								 continue;
 							 }
-							 
+
 							 /** Check the Depend [ IN ] list of my previous tasks **/
-							 
-							 tempDataList2 = tempTask2->dependInList;			
-							 while(tempDataList2)
-							 {
-								 if(!strcmp(tempDataList->variableName, tempDataList2->variableName))
-								 {									 
-									if((*tempConsumers) == NULL)
-									{
-										(*tempConsumers) = (producer*)malloc(sizeof(producer));
-										(*tempConsumers)->id = tempTask2->id;
-										(*tempConsumers)->kernels = NULL;
-										
-										tempKernel2 = tempTask2->kernels;
-										tempKernel = &((*tempConsumers)->kernels);
-										
-										while(tempKernel2)
-										{
-											if((*tempKernel) == NULL)
-											{
-												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->id = tempKernel2->id;
-												(*tempKernel)->vId = tempKernel2->vId;
-												(*tempKernel)->next = NULL;
-											}
-											else
-											{
-												while((*tempKernel) && (*tempKernel)->next)
-													tempKernel = &(*tempKernel)->next;
-												
-												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->next->id = tempKernel2->id;
-												(*tempKernel)->next->vId = tempKernel2->vId;
-												(*tempKernel)->next->next = NULL;
-											}
-											tempKernel2 = tempKernel2->next;
-										}
-										(*tempConsumers)->next = NULL;
-									}
-									else
-									{
-										tempConsumers2 = tempTask->consumers;
-										while(tempConsumers && tempConsumers2->next)
-											tempConsumers2 = tempConsumers2->next;
-										
-										tempConsumers2->next = (producer*)malloc(sizeof(producer));
-										tempConsumers2->next->id = tempTask2->id;
-										tempConsumers2->next->kernels = NULL;
-										
-										tempKernel = &(tempConsumers2->next->kernels);
-										tempKernel2 = tempTask2->kernels;
-										
-										while(tempKernel2)
-										{
-											if((*tempKernel) == NULL)
-											{
-												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->id = tempKernel2->id;
-												(*tempKernel)->vId = tempKernel2->vId;
-												(*tempKernel)->next = NULL;
-											}
-											else
-											{
-												while((*tempKernel) && (*tempKernel)->next)
-													tempKernel = &(*tempKernel)->next;
-												
-												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->next->id = tempKernel2->id;
-												(*tempKernel)->next->vId = tempKernel2->vId;
-												(*tempKernel)->next->next = NULL;
-											}
-											
-											tempKernel2 = tempKernel2->next;
-										}
-										tempConsumers2->next->next = NULL;
-									}
-								 }
-								 tempDataList2 = tempDataList2->next;
-							 }
-							 
-							 
-							  /** Check the Depend [ INOUT ] list of my previous tasks **/
-							 
-							 tempDataList2 = tempTask2->dependInOutList;			
+
+							 tempDataList2 = tempTask2->dependInList;
 							 while(tempDataList2)
 							 {
 								 if(!strcmp(tempDataList->variableName, tempDataList2->variableName))
@@ -1114,10 +1033,10 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 										(*tempConsumers) = (producer*)malloc(sizeof(producer));
 										(*tempConsumers)->id = tempTask2->id;
 										(*tempConsumers)->kernels = NULL;
-										
+
 										tempKernel2 = tempTask2->kernels;
 										tempKernel = &((*tempConsumers)->kernels);
-										
+
 										while(tempKernel2)
 										{
 											if((*tempKernel) == NULL)
@@ -1131,7 +1050,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 											{
 												while((*tempKernel) && (*tempKernel)->next)
 													tempKernel = &(*tempKernel)->next;
-												
+
 												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
 												(*tempKernel)->next->id = tempKernel2->id;
 												(*tempKernel)->next->vId = tempKernel2->vId;
@@ -1146,14 +1065,14 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 										tempConsumers2 = tempTask->consumers;
 										while(tempConsumers2 && tempConsumers2->next)
 											tempConsumers2 = tempConsumers2->next;
-										
+
 										tempConsumers2->next = (producer*)malloc(sizeof(producer));
 										tempConsumers2->next->id = tempTask2->id;
 										tempConsumers2->next->kernels = NULL;
-										
+
 										tempKernel = &(tempConsumers2->next->kernels);
 										tempKernel2 = tempTask2->kernels;
-										
+
 										while(tempKernel2)
 										{
 											if((*tempKernel) == NULL)
@@ -1167,13 +1086,94 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 											{
 												while((*tempKernel) && (*tempKernel)->next)
 													tempKernel = &(*tempKernel)->next;
-												
+
 												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
 												(*tempKernel)->next->id = tempKernel2->id;
 												(*tempKernel)->next->vId = tempKernel2->vId;
 												(*tempKernel)->next->next = NULL;
 											}
-											
+
+											tempKernel2 = tempKernel2->next;
+										}
+										tempConsumers2->next->next = NULL;
+									}
+								 }
+								 tempDataList2 = tempDataList2->next;
+							 }
+
+
+							  /** Check the Depend [ INOUT ] list of my previous tasks **/
+
+							 tempDataList2 = tempTask2->dependInOutList;
+							 while(tempDataList2)
+							 {
+								 if(!strcmp(tempDataList->variableName, tempDataList2->variableName))
+								 {
+									if((*tempConsumers) == NULL)
+									{
+										(*tempConsumers) = (producer*)malloc(sizeof(producer));
+										(*tempConsumers)->id = tempTask2->id;
+										(*tempConsumers)->kernels = NULL;
+
+										tempKernel2 = tempTask2->kernels;
+										tempKernel = &((*tempConsumers)->kernels);
+
+										while(tempKernel2)
+										{
+											if((*tempKernel) == NULL)
+											{
+												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->id = tempKernel2->id;
+												(*tempKernel)->vId = tempKernel2->vId;
+												(*tempKernel)->next = NULL;
+											}
+											else
+											{
+												while((*tempKernel) && (*tempKernel)->next)
+													tempKernel = &(*tempKernel)->next;
+
+												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->next->id = tempKernel2->id;
+												(*tempKernel)->next->vId = tempKernel2->vId;
+												(*tempKernel)->next->next = NULL;
+											}
+											tempKernel2 = tempKernel2->next;
+										}
+										(*tempConsumers)->next = NULL;
+									}
+									else
+									{
+										tempConsumers2 = tempTask->consumers;
+										while(tempConsumers2 && tempConsumers2->next)
+											tempConsumers2 = tempConsumers2->next;
+
+										tempConsumers2->next = (producer*)malloc(sizeof(producer));
+										tempConsumers2->next->id = tempTask2->id;
+										tempConsumers2->next->kernels = NULL;
+
+										tempKernel = &(tempConsumers2->next->kernels);
+										tempKernel2 = tempTask2->kernels;
+
+										while(tempKernel2)
+										{
+											if((*tempKernel) == NULL)
+											{
+												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->id = tempKernel2->id;
+												(*tempKernel)->vId = tempKernel2->vId;
+												(*tempKernel)->next = NULL;
+											}
+											else
+											{
+												while((*tempKernel) && (*tempKernel)->next)
+													tempKernel = &(*tempKernel)->next;
+
+												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->next->id = tempKernel2->id;
+												(*tempKernel)->next->vId = tempKernel2->vId;
+												(*tempKernel)->next->next = NULL;
+											}
+
 											tempKernel2 = tempKernel2->next;
 										}
 										tempConsumers2->next->next = NULL;
@@ -1234,7 +1234,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 								 tempTask2 = tempTask2->next;
 								 continue;
 							 }
-							 
+
 							 /** Check the Depend [ OUT ] list of my previous tasks **/
 							 
 							 tempDataList2 = tempTask2->dependOutList;			
@@ -1279,7 +1279,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 										tempProducers2 = tempTask->producers;
 										while(tempProducers2 && tempProducers2->next)
 											tempProducers2 = tempProducers2->next;
-										
+
 										tempProducers2->next = (producer*)malloc(sizeof(producer));
 										tempProducers2->next->id = tempTask2->id;
 										tempProducers2->next->kernels = NULL;
@@ -1592,8 +1592,8 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 					 }
 					 tempDataList = tempDataList->next;
 				 }
-				 
-				
+
+
 				/* Check Depend [ INOUT ] list */
 				 
 				 
@@ -1780,8 +1780,8 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 								 tempDataList2 = tempDataList2->next;
 							 }
 						}
-						
-						
+
+
 						if(tempTask2->id > tempTask->id)							// Check all my proceeding tasks
 						 {
 							 // Check if it is already in the list -- Dont put it in twice
@@ -1797,91 +1797,10 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 								 tempTask2 = tempTask2->next;
 								 continue;
 							 }
-							 
+
 							 /** Check the Depend [ IN ] list of my previous tasks **/
-							 
-							 tempDataList2 = tempTask2->dependInList;			
-							 while(tempDataList2)
-							 {
-								 if(!strcmp(tempDataList->variableName, tempDataList2->variableName))
-								 {									 
-									if((*tempConsumers) == NULL)
-									{
-										(*tempConsumers) = (producer*)malloc(sizeof(producer));
-										(*tempConsumers)->id = tempTask2->id;
-										(*tempConsumers)->kernels = NULL;
-										
-										tempKernel2 = tempTask2->kernels;
-										tempKernel = &((*tempConsumers)->kernels);
-										
-										while(tempKernel2)
-										{
-											if((*tempKernel) == NULL)
-											{
-												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->id = tempKernel2->id;
-												(*tempKernel)->vId = tempKernel2->vId;
-												(*tempKernel)->next = NULL;
-											}
-											else
-											{
-												while((*tempKernel) && (*tempKernel)->next)
-													tempKernel = &(*tempKernel)->next;
-												
-												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->next->id = tempKernel2->id;
-												(*tempKernel)->next->vId = tempKernel2->vId;
-												(*tempKernel)->next->next = NULL;
-											}
-											tempKernel2 = tempKernel2->next;
-										}
-										(*tempConsumers)->next = NULL;
-									}
-									else
-									{
-										tempConsumers2 = tempTask->consumers;
-										while(tempConsumers2 && tempConsumers2->next)
-											tempConsumers2 = tempConsumers2->next;
-										
-										tempConsumers2->next = (producer*)malloc(sizeof(producer));
-										tempConsumers2->next->id = tempTask2->id;
-										tempConsumers2->next->kernels = NULL;
-										
-										tempKernel = &(tempConsumers2->next->kernels);
-										tempKernel2 = tempTask2->kernels;
-										
-										while(tempKernel2)
-										{
-											if((*tempKernel) == NULL)
-											{
-												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->id = tempKernel2->id;
-												(*tempKernel)->vId = tempKernel2->vId;
-												(*tempKernel)->next = NULL;
-											}
-											else
-											{
-												while((*tempKernel) && (*tempKernel)->next)
-													tempKernel = &(*tempKernel)->next;
-												
-												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
-												(*tempKernel)->next->id = tempKernel2->id;
-												(*tempKernel)->next->vId = tempKernel2->vId;
-												(*tempKernel)->next->next = NULL;
-											}
-											
-											tempKernel2 = tempKernel2->next;
-										}
-										tempConsumers2->next->next = NULL;
-									}
-								 }
-								 tempDataList2 = tempDataList2->next;
-							 }
-							 
-							 
-							  /** Check the Depend [ INOUT ] list of my previous tasks **/
-							 
-							 tempDataList2 = tempTask2->dependInOutList;			
+
+							 tempDataList2 = tempTask2->dependInList;
 							 while(tempDataList2)
 							 {
 								 if(!strcmp(tempDataList->variableName, tempDataList2->variableName))
@@ -1891,10 +1810,10 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 										(*tempConsumers) = (producer*)malloc(sizeof(producer));
 										(*tempConsumers)->id = tempTask2->id;
 										(*tempConsumers)->kernels = NULL;
-										
+
 										tempKernel2 = tempTask2->kernels;
 										tempKernel = &((*tempConsumers)->kernels);
-										
+
 										while(tempKernel2)
 										{
 											if((*tempKernel) == NULL)
@@ -1908,7 +1827,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 											{
 												while((*tempKernel) && (*tempKernel)->next)
 													tempKernel = &(*tempKernel)->next;
-												
+
 												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
 												(*tempKernel)->next->id = tempKernel2->id;
 												(*tempKernel)->next->vId = tempKernel2->vId;
@@ -1923,14 +1842,14 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 										tempConsumers2 = tempTask->consumers;
 										while(tempConsumers2 && tempConsumers2->next)
 											tempConsumers2 = tempConsumers2->next;
-										
+
 										tempConsumers2->next = (producer*)malloc(sizeof(producer));
 										tempConsumers2->next->id = tempTask2->id;
 										tempConsumers2->next->kernels = NULL;
-										
+
 										tempKernel = &(tempConsumers2->next->kernels);
 										tempKernel2 = tempTask2->kernels;
-										
+
 										while(tempKernel2)
 										{
 											if((*tempKernel) == NULL)
@@ -1944,13 +1863,94 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 											{
 												while((*tempKernel) && (*tempKernel)->next)
 													tempKernel = &(*tempKernel)->next;
-												
+
 												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
 												(*tempKernel)->next->id = tempKernel2->id;
 												(*tempKernel)->next->vId = tempKernel2->vId;
 												(*tempKernel)->next->next = NULL;
 											}
-											
+
+											tempKernel2 = tempKernel2->next;
+										}
+										tempConsumers2->next->next = NULL;
+									}
+								 }
+								 tempDataList2 = tempDataList2->next;
+							 }
+
+
+							  /** Check the Depend [ INOUT ] list of my previous tasks **/
+
+							 tempDataList2 = tempTask2->dependInOutList;
+							 while(tempDataList2)
+							 {
+								 if(!strcmp(tempDataList->variableName, tempDataList2->variableName))
+								 {
+									if((*tempConsumers) == NULL)
+									{
+										(*tempConsumers) = (producer*)malloc(sizeof(producer));
+										(*tempConsumers)->id = tempTask2->id;
+										(*tempConsumers)->kernels = NULL;
+
+										tempKernel2 = tempTask2->kernels;
+										tempKernel = &((*tempConsumers)->kernels);
+
+										while(tempKernel2)
+										{
+											if((*tempKernel) == NULL)
+											{
+												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->id = tempKernel2->id;
+												(*tempKernel)->vId = tempKernel2->vId;
+												(*tempKernel)->next = NULL;
+											}
+											else
+											{
+												while((*tempKernel) && (*tempKernel)->next)
+													tempKernel = &(*tempKernel)->next;
+
+												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->next->id = tempKernel2->id;
+												(*tempKernel)->next->vId = tempKernel2->vId;
+												(*tempKernel)->next->next = NULL;
+											}
+											tempKernel2 = tempKernel2->next;
+										}
+										(*tempConsumers)->next = NULL;
+									}
+									else
+									{
+										tempConsumers2 = tempTask->consumers;
+										while(tempConsumers2 && tempConsumers2->next)
+											tempConsumers2 = tempConsumers2->next;
+
+										tempConsumers2->next = (producer*)malloc(sizeof(producer));
+										tempConsumers2->next->id = tempTask2->id;
+										tempConsumers2->next->kernels = NULL;
+
+										tempKernel = &(tempConsumers2->next->kernels);
+										tempKernel2 = tempTask2->kernels;
+
+										while(tempKernel2)
+										{
+											if((*tempKernel) == NULL)
+											{
+												(*tempKernel) = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->id = tempKernel2->id;
+												(*tempKernel)->vId = tempKernel2->vId;
+												(*tempKernel)->next = NULL;
+											}
+											else
+											{
+												while((*tempKernel) && (*tempKernel)->next)
+													tempKernel = &(*tempKernel)->next;
+
+												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
+												(*tempKernel)->next->id = tempKernel2->id;
+												(*tempKernel)->next->vId = tempKernel2->vId;
+												(*tempKernel)->next->next = NULL;
+											}
+
 											tempKernel2 = tempKernel2->next;
 										}
 										tempConsumers2->next->next = NULL;
@@ -2092,8 +2092,9 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
             while(!StackIsEmpty(&temp_Stack))
                 Stack_Pop(&temp_Stack);
         }
-        
-        
+        Stack_Free(&tred_Stack);
+        Stack_Free(&temp_Stack);
+
         // Copy new consumers to tred_consumers in SG
         
         i = 0;
@@ -2259,7 +2260,9 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 				while(!StackIsEmpty(&temp_Stack))
 					Stack_Pop(&temp_Stack);
 			}
-			
+            Stack_Free(&tred_Stack);
+            Stack_Free(&temp_Stack);
+
 			
 			// Transitive Reduction of tred_array	-- RECURSION SOLUTION	
 			
@@ -2527,8 +2530,8 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 				while(!StackIsEmpty(&temp_Stack))
 					Stack_Pop(&temp_Stack);
 			}
-			
-			
+
+
 			
 			
 			// Transitive Reduction of tred_array	-- RECURSION SOLUTION	
@@ -2576,7 +2579,7 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 			
 			
 			// Copy new consumers to tred_consumers in SG
-			
+
 			tempSection = tempFunction->sections;
 			while(tempSection)
 			{
@@ -2585,7 +2588,7 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 				while(tempTask)
 				{
 					tempConsumers2 = &(tempTask->tred_consumers);
-					
+
 					tempConsumers = tempTask->consumers;
 					while(tempConsumers)
 					{
@@ -2602,10 +2605,10 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 											(*tempConsumers2) = (producer*)malloc(sizeof(producer));
 											(*tempConsumers2)->id = tempConsumers->id;
 											(*tempConsumers2)->kernels = NULL;
-											
+
 											tempKernel2 = tempConsumers->kernels;
 											tempKernel = &((*tempConsumers2)->kernels);
-											
+
 											while(tempKernel2)
 											{
 												if((*tempKernel) == NULL)
@@ -2634,14 +2637,14 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 											tempConsumers3 = tempTask->tred_consumers;
 											while(tempConsumers3 && tempConsumers3->next)
 												tempConsumers3 = tempConsumers3->next;
-											
+
 											tempConsumers3->next = (producer*)malloc(sizeof(producer));
 											tempConsumers3->next->id = tempConsumers->id;
 											tempConsumers3->next->kernels = NULL;
-											
+
 											tempKernel = &(tempConsumers3->next->kernels);
 											tempKernel2 = tempConsumers->kernels;
-											
+
 											while(tempKernel2)
 											{
 												if((*tempKernel) == NULL)
@@ -2828,17 +2831,17 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				while(!StackIsEmpty(&temp_Stack))
 					Stack_Pop(&temp_Stack);
 			}
-			
-			
-			// Transitive Reduction of tred_array	-- RECURSION SOLUTION	
-			
+
+
+			// Transitive Reduction of tred_array	-- RECURSION SOLUTION
+
 			/*
 			for(i = 0; i < taskCounter; i++)
 			{
 				for(j = 0; j < taskCounter; j++)
 				{
 					if(tred_array[i][j] == TRUE)
-					{							
+					{
 						flag = FALSE;
 						counter = 0;
 						recursive_DFS(i, j, taskCounter);
@@ -2848,8 +2851,8 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				}
 			}
 			*/
-			
-			
+
+
 			/** PRINTING EVALUATION -- REMOVE AFTER FINISH -- START FROM HERE **/
 			/*
 			tempTask = tempFunction->tasks;
@@ -2859,7 +2862,7 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				for(i = 0; i < taskCounter; i++)
 					fprintf(stderr, "t_%d\t", i+1);
 				fprintf(stderr, "\n");
-	
+
 				for(i = 0; i < taskCounter; i++)
 				{
 					fprintf(stderr, "t_%d:\t", i+1);
@@ -2871,17 +2874,17 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 			}
 			*/
 			/** PRINTING EVALUATION -- REMOVE AFTER FINISH -- UNTIL HERE **/
-			
-			
-			
+
+
+
 			// Copy new producers to tred_producers in SG
-			
+
 			i = 0;
 			tempTask = tempFunction->tasks;
 			while(tempTask)
 			{
 				tempProducers2 = &(tempTask->tred_producers);
-				
+
 				tempProducers = tempTask->producers;
 				while(tempProducers)
 				{
@@ -2898,10 +2901,10 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 										(*tempProducers2) = (producer*)malloc(sizeof(producer));
 										(*tempProducers2)->id = tempProducers->id;
 										(*tempProducers2)->kernels = NULL;
-										
+
 										tempKernel2 = tempProducers->kernels;
 										tempKernel = &((*tempProducers2)->kernels);
-										
+
 										while(tempKernel2)
 										{
 											if((*tempKernel) == NULL)
@@ -2915,7 +2918,7 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 											{
 												while((*tempKernel) && (*tempKernel)->next)
 													tempKernel = &(*tempKernel)->next;
-												
+
 												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
 												(*tempKernel)->next->id = tempKernel2->id;
 												(*tempKernel)->next->vId = tempKernel2->vId;
@@ -2930,14 +2933,14 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 										tempProducers3 = tempTask->tred_producers;
 										while(tempProducers3 && tempProducers3->next)
 											tempProducers3 = tempProducers3->next;
-										
+
 										tempProducers3->next = (producer*)malloc(sizeof(producer));
 										tempProducers3->next->id = tempProducers->id;
 										tempProducers3->next->kernels = NULL;
-										
+
 										tempKernel = &(tempProducers3->next->kernels);
 										tempKernel2 = tempProducers->kernels;
-										
+
 										while(tempKernel2)
 										{
 											if((*tempKernel) == NULL)
@@ -2951,13 +2954,13 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 											{
 												while((*tempKernel) && (*tempKernel)->next)
 													tempKernel = &(*tempKernel)->next;
-												
+
 												(*tempKernel)->next = (kernel*)malloc(sizeof(kernel));
 												(*tempKernel)->next->id = tempKernel2->id;
 												(*tempKernel)->next->vId = tempKernel2->vId;
 												(*tempKernel)->next->next = NULL;
 											}
-											
+
 											tempKernel2 = tempKernel2->next;
 										}
 										tempProducers3->next->next = NULL;
@@ -2973,10 +2976,10 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				i++;
 				tempTask = tempTask->next;
 			}
-			
-			
 
-			
+
+
+
 			/** Take care of section tasks **/
 			for(i = 0; i < taskCounter; i++)			// Memory Leak Fix
 				free(tred_array[i]);					// Memory Leak Fix
@@ -2994,17 +2997,17 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				}
 				tempSection = tempSection->next;
 			}
-			
+
 			// Allocate memory for tred_array & visited
 			tred_array = (bool**)malloc(sizeof(bool*)*taskCounter);
 			for(i = 0; i < taskCounter; i++)
 				tred_array[i] = (bool*)malloc(sizeof(bool)*taskCounter);
-			
+
 			// Initialize tred_array
 			for(i = 0; i < taskCounter; i++)
 				for(j = 0; j< taskCounter; j++)
 					tred_array[i][j] = FALSE;
-					
+
 			// Add producers in the tred_array
 			tempSection = tempFunction->sections;
 			while(tempSection)
@@ -3032,10 +3035,10 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 					}
 					i++;
 					tempTask = tempTask->next;
-				}	
+				}
 				tempSection = tempSection->next;
 			}
-			
+
 			/** PRINTING EVALUATION -- REMOVE AFTER FINISH -- START FROM HERE **/
 			/*
 			tempSection = tempFunction->sections;
@@ -3045,7 +3048,7 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				for(i = 0; i < taskCounter; i++)
 					fprintf(stderr, "t_%d\t", i+1);
 				fprintf(stderr, "\n");
-	
+
 				for(i = 0; i < taskCounter; i++)
 				{
 					fprintf(stderr, "t_%d:\t", i+1);
@@ -3057,24 +3060,24 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 			}
 			*/
 			/** PRINTING EVALUATION -- REMOVE AFTER FINISH -- UNTIL HERE **/
-			
-			
-			
-			// Transitive Reduction of tred_array	-- ITERATIVE SOLUTION	
-			
+
+
+
+			// Transitive Reduction of tred_array	-- ITERATIVE SOLUTION
+
 			Stack_Init(&tred_Stack, taskCounter*taskCounter);
 			Stack_Init(&temp_Stack, taskCounter);
-			
+
 			for(i = 0; i < taskCounter; i++)
 			{
 				Stack_Push(&tred_Stack, i, taskCounter*taskCounter);
-				
+
 				while(!StackIsEmpty(&tred_Stack))
-				{		
+				{
 					k = Stack_Pop(&tred_Stack);
-					
+
 					for(j = 0; j < taskCounter; j++)
-					{						
+					{
 						if(tred_array[k][j] == TRUE)
 						{
 							Stack_Push(&tred_Stack, j, taskCounter*taskCounter);
@@ -3096,8 +3099,8 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				while(!StackIsEmpty(&temp_Stack))
 					Stack_Pop(&temp_Stack);
 			}
-			
-			
+
+
 			
 			
 			// Transitive Reduction of tred_array	-- RECURSION SOLUTION	
@@ -3143,7 +3146,7 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 			
 			
 			
-			
+
 			// Copy new producers to tred_producers in SG
 			
 			tempSection = tempFunction->sections;
@@ -3564,9 +3567,9 @@ void offlineScheduling_AssignKernelsToTasks_Random(SG** Graph){
 							(*tempKernel)->next->id = randomKernel;
 							(*tempKernel)->next->next = NULL;
 						}
-                        
+
 						i--;
-                        
+
 						if(tempTask->taskType == TASK_MASTER)
 							kernelAvailability[0] = FALSE;
 						else
@@ -3574,12 +3577,12 @@ void offlineScheduling_AssignKernelsToTasks_Random(SG** Graph){
 					}
                     
 					if(tempTask->taskType != TASK_MASTER)
-					{                        
+					{
 						tempFunctionKernel = tempFunction->kernels;
-                        
+
 						while(tempFunctionKernel && !kernelAvailability[tempFunctionKernel->id])
 							tempFunctionKernel = tempFunctionKernel->next;
-                        
+
                         if(!tempFunctionKernel)     								// If not all tasks are assigned a kernel then restart
                             reassignFlag = TRUE;
 					}
@@ -3595,7 +3598,7 @@ void offlineScheduling_AssignKernelsToTasks_Random(SG** Graph){
 				tempTask = tempSection->tasks;
 				while(tempTask)
                 {
-                    srand((unsigned) time(&t));                
+                    srand((unsigned) time(&t));
                     i = tempTask->number_of_kernels;
                     tempKernel = &(tempTask->kernels);
                     while(i > 0)
@@ -3659,7 +3662,7 @@ void offlineScheduling_AssignKernelsToTasks_Random(SG** Graph){
                     tempTask = tempTask->next;
                 }
 				tempSection = tempSection->next;	
-			}				
+			}
 			tempFunction = tempFunction->next;
 		}
 		tempGraph = tempGraph->next;		

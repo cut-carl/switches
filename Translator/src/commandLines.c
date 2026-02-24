@@ -52,7 +52,6 @@ void printVersion(){
 }
 
 
-//Test
 
 /************************* Print command line help ****************************/
 
@@ -511,6 +510,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
                             exit(-1);
                     }
                 }
+                fclose(nsgaInputs);     // Memory Leak Fix: close NSGA input file
             }
             else
             {

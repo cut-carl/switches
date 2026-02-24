@@ -131,6 +131,13 @@ void Stack_Init(Stack *S, int stackSize)
     S->size = 0;
 }
 
+void Stack_Free(Stack *S)
+{
+    free(S->data);
+    S->data = NULL;
+    S->size = 0;
+}
+
 int Stack_Top(Stack *S)
 {
     if (S->size == 0) {

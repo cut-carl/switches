@@ -3120,6 +3120,9 @@ int main(int argc, char *argv[]){
                                 }
 
                                 // End the process of the NSGA algorithm as soon as all generations are finished
+                                deallocatePopulation(&parent_pop);
+                                deallocatePopulation(&child_pop);
+                                deallocatePopulation(&mixed_pop);
                                 exit(-1);
                                 break;
                                 

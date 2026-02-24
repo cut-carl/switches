@@ -264,6 +264,7 @@ void recursive_DFS(int, int, int);												/* Depth-first search implementati
 																				 */
 																				 
 void Stack_Init(Stack*, int);													/* Stack functions for iterative implementation of the Transitive Reduction Operations */
+void Stack_Free(Stack*);
 int  Stack_Top(Stack*);
 void Stack_Push(Stack*, int, int);
 int  Stack_Pop(Stack*);
