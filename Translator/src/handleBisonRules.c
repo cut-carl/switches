@@ -28,7 +28,7 @@ extern FILE *inp, *outp_sw_main, *outp_sw_h, *outp_sw_threadpool, *outp_sw_threa
 
 
 
-/*********************** Handle Varialbe Lists **************************/
+/*********************** Handle Variable Lists **************************/
 
 
 void handlePragma_variableList(int inWhichList, dataList *lists[], char *variableStr, char *variableType, char *reductionType, arrayIndex** indexes){
@@ -265,7 +265,7 @@ void handlePragma_taskConstruct(SG **Graph, dataList *lists[], int type, int num
 		
 		// Set default chunk size of STATIC scheduling policies
 		if((type == TASK_LOOP || type == TASK_REDUCTION) && (schedulingPolicy == LOOP_SCHED_STATIC || schedulingPolicy == LOOP_SCHED_CROSS)){
-			if(!schedulingPolicyChunk.localInt && !schedulingPolicyChunk.localStr)
+			if(schedulingPolicyChunk.localInt == 0 && schedulingPolicyChunk.localStr == NULL)
 				schedulingPolicyChunk.localInt = 32;
 		}
 		
