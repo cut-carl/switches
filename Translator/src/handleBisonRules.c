@@ -135,6 +135,18 @@ void handlePragma_variableList(int inWhichList, dataList *lists[], char *variabl
 						tempDataList = &lists[IN_DEPEND_INOUT];
 						addToDataList(tempDataList, variableStr, variableType, reductionType, indexes);
 						break;
+
+				case IN_TO_DEVICE:
+
+						tempDataList = &lists[IN_TO_DEVICE];
+						addToDataList(tempDataList, variableStr, variableType, reductionType, indexes);
+					break;
+
+				case IN_FROM_DEVICE:
+
+						tempDataList = &lists[IN_FROM_DEVICE];
+						addToDataList(tempDataList, variableStr, variableType, reductionType, indexes);
+					break;
 						
 				/*
 				 * Add a new case here if you add a new list and a new definition list in definitions.h
@@ -142,6 +154,7 @@ void handlePragma_variableList(int inWhichList, dataList *lists[], char *variabl
 								
 				default:
 						ERROR_IN_TRANSLATOR("%s", "Data List not found\n");
+						exit(-1);
 			}
 	}
 		
