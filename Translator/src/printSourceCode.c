@@ -2322,7 +2322,7 @@ void printInThreadsFile_SwitchesDeclaration(SG** Graph){
 								if(!tempConsumerTask->crossLoopConsumerOf)
 								{
 									tempConsumerTask->crossLoopConsumerOf     		= (crossConsumer *)malloc(sizeof(crossConsumer));
-									tempConsumerTask->crossLoopConsumerOf->id 		= tempTask->id;;		
+									tempConsumerTask->crossLoopConsumerOf->id 		= tempTask->id;
 									tempConsumerTask->crossLoopConsumerOf->next 	= NULL;
 								}
 								else
