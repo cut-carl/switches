@@ -518,6 +518,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
                     }
                 }
                 fclose(nsgaInputs);     // Memory Leak Fix: close NSGA input file
+                i--;                    // Bug fix. I am later increasing it but for the if () it doesnt need to be increased
             }
             else
             {
