@@ -400,7 +400,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
                 ERROR_COMMANDS("%s", "Memory allocation for NSGA failed!")
                 exit(-1);
             }
-                
+
             if(!strcmp(argv[i], "-f"))
             {
                 i++;
@@ -622,6 +622,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
             // Read the path of the application
             bzero(buff, sizeof(buff));
             strcpy(buff, argv[++i]);
+            fprintf(stderr, "-------------> %s", buff);
             //nsga->path = (char*)malloc(sizeof(char) * strlen(buff));
             //strcpy(nsga->path, buff);
             nsga->path = strdup(buff);	// Bug fix: Memory leak
