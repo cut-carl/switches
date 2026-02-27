@@ -722,7 +722,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
     // Check that affinity scheduling matches with the target system processor
     if(targetSystem != MIC && (affinityPolicy == AFFINITY_SCATTER || affinityPolicy == AFFINITY_HYBRID))
     {
-        ERROR_COMMANDS("Affinity policies [%s] and [%s] is only supported by Intel Xeon Phi", "Stack", "Hybrid")
+        ERROR_COMMANDS("Affinity policies [%s] and [%s] is only supported by Intel Xeon Phi", "Scatter", "Hybrid")
         printHelp();
     }
     
