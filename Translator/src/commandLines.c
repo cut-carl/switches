@@ -518,7 +518,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
                     }
                 }
                 fclose(nsgaInputs);     // Memory Leak Fix: close NSGA input file
-                i--;                    // Bug fix. I am later increasing it but for the if () it doesnt need to be increased
+                i++;                    // Bug fix
             }
             else
             {
@@ -622,7 +622,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
             
             // Read the path of the application
             bzero(buff, sizeof(buff));
-            strcpy(buff, argv[++i]);
+            strcpy(buff, argv[i]);
             fprintf(stderr, "-------------> %s", buff);
             //nsga->path = (char*)malloc(sizeof(char) * strlen(buff));
             //strcpy(nsga->path, buff);
