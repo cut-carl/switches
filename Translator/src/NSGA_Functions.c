@@ -437,9 +437,11 @@ void NSGA_printPopulationToFiles(Population** population, int generation){
     for(i = 1; i <= nsga->population && tempChild; i++)
     {
         outpChild = NULL;
-        bzero(buff, sizeof(buff));
+        //bzero(buff, sizeof(buff));
+		memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
         strcat(buff, nsga->path);
-        bzero(tempBuff, sizeof(tempBuff));
+        //bzero(tempBuff, sizeof(tempBuff));
+		memset(tempBuff, 0, sizeof(tempBuff));  // bzero() is POSIX-deprecated and not available on all platforms
         sprintf(tempBuff, "/Generations/Gen%d/g%d-c%d", generation, generation, i);
         strcat(buff, tempBuff);
         
@@ -488,8 +490,10 @@ void NSGA_evaluatePopulation(Population** population, int generation){
         {
             // Load all children results (.res files)
             inpChild = NULL;
-            bzero(buff, sizeof(buff));
-            bzero(tempBuff, sizeof(tempBuff));
+            //bzero(buff, sizeof(buff));
+			memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
+            //bzero(tempBuff, sizeof(tempBuff));
+			memset(tempBuff, 0, sizeof(tempBuff));  // bzero() is POSIX-deprecated and not available on all platforms
             strcat(buff, nsga->path);
             
             switch(nsga->objectives[j]){

@@ -2796,7 +2796,8 @@ shared_clause:
 reduction_clause:
 		REDUCTION '(' reduction_identifier ':' variable_list ')'
 		{
-			bzero(reductionType, sizeof(reductionType));
+			//bzero(reductionType, sizeof(reductionType));
+			memset(reductionType, 0, sizeof(reductionType));  // bzero() is POSIX-deprecated and not available on all platforms
 			inWhichDataList = 0;
 		}
 	;
@@ -2984,7 +2985,8 @@ int main(int argc, char *argv[]){
 		stringFor[i] = (char*)malloc(sizeof(char) * SIZE);
     
     for(i = 0; i < SIZE; i++)
-		bzero(stringFor[i], sizeof(stringFor[i]));		
+		//bzero(stringFor[i], sizeof(stringFor[i]));
+		memset(stringFor[i], 0, sizeof(stringFor[i]));  // bzero() is POSIX-deprecated and not available on all platforms
     
     /*** Temp descriptor to stdout ***/
     __OUTP_IS_NOW_STDOUT
@@ -3012,7 +3014,8 @@ int main(int argc, char *argv[]){
 		            ERROR_COMMANDS("Input file name [ %s ] is too large", inputFiles[currentFile]);
 		            exit(-1);
 		        }
-		        bzero(outputFile, sizeof(outputFile));
+		        //bzero(outputFile, sizeof(outputFile));
+		        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
 		        
                 if(runtimeSystem == RUNTIME_TAO || runtimeSystem == RUNTIME_TAOSW){
                     sprintf(outputFile, "sw_%sxx", inputFiles[currentFile]);
@@ -3149,7 +3152,8 @@ int main(int argc, char *argv[]){
                 case RUNTIME_STATIC:
                 
                         // Open [ sw_threadpool.c ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw_threadpool.c");
                         outp_sw_threadpool = fopen(outputFile, "w");
                         if(!outp_sw_threadpool){
@@ -3162,7 +3166,8 @@ int main(int argc, char *argv[]){
                         
                         
                         // Open [ sw.h ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw.h");
                         outp_sw_h = fopen(outputFile, "w");
                         if(!outp_sw_h){
@@ -3175,7 +3180,8 @@ int main(int argc, char *argv[]){
                         
                         
                         // Open [ sw_threads.c ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw_threads.c");
                         outp_sw_threads = fopen(outputFile, "w");
                         if(!outp_sw_threads){
@@ -3194,7 +3200,8 @@ int main(int argc, char *argv[]){
                 case RUNTIME_TAO:
                         
                         // Open [ sw.h ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw.h");
                         outp_sw_h = fopen(outputFile, "w");
                         if(!outp_sw_h){
@@ -3207,7 +3214,8 @@ int main(int argc, char *argv[]){
                         
                         
                         // Open [ sw_tao.h ] Output File -- TAO Classes
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw_tao.h");
                         outp_sw_tao_h = fopen(outputFile, "w");
                         if(!outp_sw_tao_h){
@@ -3220,7 +3228,8 @@ int main(int argc, char *argv[]){
                         
                         
                         // Open [ sw_threads.c ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw_threads.c");
                         outp_sw_threads = fopen(outputFile, "w");
                         if(!outp_sw_threads){
@@ -3235,7 +3244,8 @@ int main(int argc, char *argv[]){
                 case RUNTIME_TAOSW:
                 
                         // Open [ sw.h ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw.h");
                         outp_sw_h = fopen(outputFile, "w");
                         if(!outp_sw_h){
@@ -3248,7 +3258,8 @@ int main(int argc, char *argv[]){
                         
                         
                         // Open [ sw_tao.h ] Output File -- TAO Classes
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw_tao.h");
                         outp_sw_tao_h = fopen(outputFile, "w");
                         if(!outp_sw_tao_h){
@@ -3261,7 +3272,8 @@ int main(int argc, char *argv[]){
                         
                         
                         // Open [ sw_threads.c ] Output File
-                        bzero(outputFile, sizeof(outputFile));
+                        //bzero(outputFile, sizeof(outputFile));
+                        memset(outputFile, 0, sizeof(outputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                         sprintf(outputFile, "sw_threads.c");
                         outp_sw_threads = fopen(outputFile, "w");
                         if(!outp_sw_threads){

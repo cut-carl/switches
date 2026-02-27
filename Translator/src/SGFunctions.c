@@ -2539,7 +2539,10 @@ void addToDataList(dataList** list, char *variableName, char *variableType, char
 	}
 
 	if(indexes)
-		bzero(indexes, sizeof(indexes));
+	{
+		//bzero(indexes, sizeof(indexes));
+		memset(indexes, 0, sizeof(indexes));  // bzero() is POSIX-deprecated and not available on all platforms
+	}
 }
 
 
@@ -2742,7 +2745,8 @@ void copyDataListToSG(dataList **SGList, dataList** tempList){
 	}		
 	
 	// As soon as all data lists are copied to the SG, empty the temporary data list	
-	bzero(tempList, sizeof(tempList));
+	//bzero(tempList, sizeof(tempList));
+	memset(tempList, 0, sizeof(tempList));  // bzero() is POSIX-deprecated and not available on all platforms
 	
 }
 

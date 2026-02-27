@@ -417,14 +417,15 @@ void recognizeCommandlineArguments(int argc, char **argv){
                 
                 for(temp_i = 1; temp_i <= NSGA_PARAMETERS; temp_i++)
                 {
-                    bzero(buff, sizeof(buff));
+                    //bzero(buff, sizeof(buff));
+                    memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
                     res = fscanf(nsgaInputs, "%s", buff);
                     
                     switch(temp_i){
                         
                         case NSGA_POPULATION:
                             if(!strcmp(buff, "default"))
-                                nsga->population = 12;
+                                nsga->population = 10;
                             else
                             {
                                 nsga->population = atoi(buff);
@@ -456,7 +457,8 @@ void recognizeCommandlineArguments(int argc, char **argv){
                             // Now read the Objectives
                             do
                             {
-                                bzero(buff, sizeof(buff));
+                                //bzero(buff, sizeof(buff));
+                                memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
                                 res = fscanf(nsgaInputs, "%s", buff);
                             
                                 if(!strcmp(buff, "default"))
@@ -524,7 +526,8 @@ void recognizeCommandlineArguments(int argc, char **argv){
             {
                 for(temp_i = 1; temp_i <= NSGA_PARAMETERS; temp_i++)
                 {
-                    bzero(buff, sizeof(buff));
+                    //bzero(buff, sizeof(buff));
+                    memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
                     strcpy(buff, argv[i++]);
                     
                     switch(temp_i){
@@ -556,7 +559,8 @@ void recognizeCommandlineArguments(int argc, char **argv){
                             // Now read the Objectives
                             do
                             {
-                                bzero(buff, sizeof(buff));
+                                //bzero(buff, sizeof(buff));
+                                memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
                                 strcpy(buff, argv[i++]);
                             
                                 if(!strcmp(buff, "default"))
@@ -621,9 +625,9 @@ void recognizeCommandlineArguments(int argc, char **argv){
             }
             
             // Read the path of the application
-            bzero(buff, sizeof(buff));
+            //bzero(buff, sizeof(buff));
+            memset(buff, 0, sizeof(buff));  // bzero() is POSIX-deprecated and not available on all platforms
             strcpy(buff, argv[i]);
-            fprintf(stderr, "-------------> %s", buff);
             //nsga->path = (char*)malloc(sizeof(char) * strlen(buff));
             //strcpy(nsga->path, buff);
             nsga->path = strdup(buff);	// Bug fix: Memory leak
@@ -675,6 +679,7 @@ void recognizeCommandlineArguments(int argc, char **argv){
                 // Store input files
                 //schedulingInputFile = malloc(sizeof(char) * strlen(argv[i])*2);
                 //bzero(schedulingInputFile, sizeof(schedulingInputFile));
+                //memset(schedulingInputFile, 0, sizeof(schedulingInputFile));  // bzero() is POSIX-deprecated and not available on all platforms
                 //strcpy(schedulingInputFile, argv[i]);
                 schedulingInputFile = strdup(argv[i]);
 

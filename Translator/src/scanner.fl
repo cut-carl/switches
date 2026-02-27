@@ -1569,7 +1569,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "char");
 						
 						WRITE("%s", yytext);
@@ -1631,7 +1632,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "double");
 						
 						WRITE("%s", yytext);
@@ -1664,7 +1666,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "float");
 						
 						WRITE("%s", yytext);
@@ -1697,7 +1700,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "int");
 						
 						WRITE("%s", yytext);
@@ -1730,7 +1734,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "bool");
 						
 						WRITE("%s", yytext);
@@ -1763,7 +1768,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "long");
 						
 						WRITE("%s", yytext);
@@ -1796,7 +1802,8 @@ static int check_type(void);
 					else if(!firstPass)
 					{
 						// This is for recognizing the types of the variables in the SG lists
-						bzero(variableType, sizeof(variableType));
+						//bzero(variableType, sizeof(variableType));
+						memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 						strcpy(variableType, "short");
 						
 						WRITE("%s", yytext);
@@ -3288,7 +3295,8 @@ static int check_type(void);
 								else if(!firstPass)
 								{
 									// Empty variableType
-									bzero(variableType, sizeof(variableType));
+									//bzero(variableType, sizeof(variableType));
+									memset(variableType, 0, sizeof(variableType));  // bzero() is POSIX-deprecated and not available on all platforms
 									WRITE("%s", yytext);
 								}
 								else if(firstPass)
@@ -4042,7 +4050,8 @@ static int check_type(void);
 						}
 						else if(firstPass)
 						{
-							bzero(includesDeclaration[includesDeclarationCounter], sizeof(includesDeclaration[includesDeclarationCounter]));
+							//bzero(includesDeclaration[includesDeclarationCounter], sizeof(includesDeclaration[includesDeclarationCounter]));
+							memset(includesDeclaration[includesDeclarationCounter], 0, sizeof(includesDeclaration[includesDeclarationCounter]));  // bzero() is POSIX-deprecated and not available on all platforms
 							strcat(includesDeclaration[includesDeclarationCounter++], yytext);
 						}
 					}
@@ -4055,7 +4064,8 @@ static int check_type(void);
 						}
 						else if(firstPass)
 						{
-							bzero(includesDeclaration[includesDeclarationCounter], sizeof(includesDeclaration[includesDeclarationCounter]));
+							//(includesDeclaration[includesDeclarationCounter], sizeof(includesDeclaration[includesDeclarationCounter]));
+							memset(includesDeclaration[includesDeclarationCounter], 0, sizeof(includesDeclaration[includesDeclarationCounter]));  // bzero() is POSIX-deprecated and not available on all platforms
 							strcat(includesDeclaration[includesDeclarationCounter++], yytext);
 						}
 					}
