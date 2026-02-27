@@ -1216,7 +1216,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 				 tempDataList = tempTask->dependInList; 
 				 while(tempDataList)
 				 {
-					 tempTask2 = tempFunction->tasks;
+					 tempTask2 = tempSection->tasks;		// Bug Fix: use to be: tempTask2 = tempFunction->tasks;
 					 while(tempTask2)
 					 {  
 						 if(tempTask2->id < tempTask->id)							// Check all my previous tasks
@@ -1408,7 +1408,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 				 tempDataList = tempTask->dependOutList; 
 				 while(tempDataList)
 				 {
-					 tempTask2 = tempFunction->tasks;
+					 tempTask2 = tempSection->tasks;		// Bug Fix: use to be: tempTask2 = tempFunction->tasks;
 					 while(tempTask2)
 					 { 
 						 if(tempTask2->id > tempTask->id)							// Check all my proceeding tasks
@@ -1600,7 +1600,7 @@ void offlineScheduling_CreateDependencies(SG** Graph){
 				 tempDataList = tempTask->dependInOutList; 
 				 while(tempDataList)
 				 {
-					 tempTask2 = tempFunction->tasks;
+					 tempTask2 = tempSection->tasks;		// Bug Fix: use to be: tempTask2 = tempFunction->tasks;
 					 while(tempTask2)
 					 {
 						 if(tempTask2->id < tempTask->id)							// Check all my previous tasks
@@ -2009,6 +2009,8 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 
 	while(tempGraph)
 	{
+		functionCounter = 0;
+
         /** Take care of parallel functions **/
 			
         // Counter how many tasks there are in a function -- to allocate the tred_consumer_array[TASKS][TASKS]
@@ -2530,6 +2532,8 @@ void offlineScheduling_TransitiveReductionOfConsumers(SG** Graph){
 				while(!StackIsEmpty(&temp_Stack))
 					Stack_Pop(&temp_Stack);
 			}
+			Stack_Free(&tred_Stack);
+        	Stack_Free(&temp_Stack);
 
 
 			
@@ -2832,6 +2836,9 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 					Stack_Pop(&temp_Stack);
 			}
 
+			Stack_Free(&tred_Stack);
+        	Stack_Free(&temp_Stack);
+
 
 			// Transitive Reduction of tred_array	-- RECURSION SOLUTION
 
@@ -3099,6 +3106,9 @@ void offlineScheduling_TransitiveReductionOfProducers(SG** Graph){
 				while(!StackIsEmpty(&temp_Stack))
 					Stack_Pop(&temp_Stack);
 			}
+
+			Stack_Free(&tred_Stack);
+        	Stack_Free(&temp_Stack);
 
 
 			
@@ -3370,10 +3380,11 @@ void offlineScheduling_AssignKernelsToTasks_RoundRobin(SG** Graph){
 	task 				*tempTask;
 	kernel				**tempKernel;
 	kernel				*tempFunctionKernel;
-	int					kernelAvailability[kernels];
+	int					*kernelAvailability;
 	int 				i = 0;
 	bool				reassignFlag = FALSE;
 
+	kernelAvailability = (int*)malloc(kernels * sizeof(int));
 
 	while(tempGraph)
 	{
@@ -3505,11 +3516,13 @@ void offlineScheduling_AssignKernelsToTasks_Random(SG** Graph){
 	kernel				**tempKernel;
 	kernel				*tempFunctionKernel;
 	kernel				*tempTempFunctionKernel;
-	int					kernelAvailability[kernels];
+	int					*kernelAvailability;
 	int 				i = 0;
     int                 randomKernel = -1;
     time_t              t;
 	bool				reassignFlag = FALSE;
+
+	kernelAvailability = (int*)malloc(kernels * sizeof(int));
 
 
 	while(tempGraph)
@@ -3682,7 +3695,6 @@ void offlineScheduling_AssignKernelsToTasks_File(SG** Graph){
 	section 			*tempSection;
 	task 				*tempTask;
 	kernel				**tempKernel;
-	int					kernelAvailability[kernels];
 	int 				i = 0;
     FILE                *inp;
     int                 fileKernelID = -1;

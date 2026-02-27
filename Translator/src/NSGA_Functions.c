@@ -132,6 +132,7 @@ void deallocatePopulation(Population** population){
         tempChild = next;
     }
     free(*population);
+    *population = NULL;
 }
 
 
@@ -251,11 +252,13 @@ void NSGA_initializePopulation(SG** Graph, Population** population){
     kernel				**tempKernel;
     Child               *tempChild = (*population)->child;
     
-    int					kernelAvailability[kernels];
+    int					*kernelAvailability;
     bool				reassignFlag = FALSE;
     int                 temp = -1;
 
-    
+    kernelAvailability = (int*)malloc(kernels * sizeof(int));
+
+
     for(j = 0; j < nsga->population; j++)
     {
         k = 0;
@@ -1290,7 +1293,7 @@ void copy_child(Child *child1, Child *child2){
 
 void NSGA_fill_nondominated_sort(Population **mixed_pop, Population **new_pop){
     
-    int flag, i, j, k, end, front_size = 0, archieve_size = 0, rank=1;
+    int flag = -2, i, j, k, end, front_size = 0, archieve_size = 0, rank=1;
     int popsize = (int)nsga->population;
     
     list *pool;

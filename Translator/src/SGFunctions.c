@@ -29,7 +29,7 @@ extern FILE *inp, *outp_sw_main, *outp_sw_h, *outp_sw_threadpool, *outp_sw_threa
 
 
 
-/****************** Print SG to Terminal for Debugginh ******************/
+/****************** Print SG to Terminal for Debugging ******************/
 
 
 void printSG(SG** Graph, int printSGFlag){
@@ -2154,6 +2154,7 @@ void addSynchronizationGraph(SG** Graph){
 		(*Graph) = (SG *)malloc(sizeof(SG));
 		(*Graph)->id 				  = 1;
 		(*Graph)->parallel_functions  = NULL;
+		(*Graph)->threadPrivateList   = NULL;
 		(*Graph)->next 			 	  = NULL;
 	}
 	else
@@ -2164,6 +2165,7 @@ void addSynchronizationGraph(SG** Graph){
 		tempGraph->next = (SG *)malloc(sizeof(SG));
 		tempGraph->next->id 				= tempGraph->id+1;
 		tempGraph->next->parallel_functions = NULL;
+		tempGraph->next->threadPrivateList  = NULL;
 		tempGraph->next->next 		  		= NULL;
 	}	
 }
@@ -2541,7 +2543,8 @@ void addToDataList(dataList** list, char *variableName, char *variableType, char
 	if(indexes)
 	{
 		//bzero(indexes, sizeof(indexes));
-		memset(indexes, 0, sizeof(indexes));  // bzero() is POSIX-deprecated and not available on all platforms
+		//memset(indexes, 0, sizeof(indexes));  // bzero() is POSIX-deprecated and not available on all platforms
+		*indexes = NULL;
 	}
 }
 
@@ -2746,8 +2749,8 @@ void copyDataListToSG(dataList **SGList, dataList** tempList){
 	
 	// As soon as all data lists are copied to the SG, empty the temporary data list	
 	//bzero(tempList, sizeof(tempList));
-	memset(tempList, 0, sizeof(tempList));  // bzero() is POSIX-deprecated and not available on all platforms
-	
+	//memset(tempList, 0, sizeof(tempList));  // bzero() is POSIX-deprecated and not available on all platforms
+	*tempList = NULL;
 }
 
 
